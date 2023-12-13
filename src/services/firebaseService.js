@@ -7,7 +7,6 @@ class FirebaseService {
   constructor() {
     const firebaseConfig = {
       apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
-      //apiKey: "AIzaSyDox442Dw5WvZaW7_BIPi8IXRukreK-8QE",
       authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
       databaseURL: import.meta.env.VITE_APP_FIREBASE_DATABASE_URL,
       projectId: import.meta.env.VITE_APP_FIREBASE_PROJECT_ID,
