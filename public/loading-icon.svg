@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="rgb(137, 137, 253)" stroke="rgb(78, 78, 228)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10" stroke-opacity="0.3">
+    <animate
+      attributeName="r"
+      dur="1s"
+      values="10;8;10"
+      keyTimes="0;0.5;1"
+      repeatCount="indefinite"
+    />
+    <animate
+      attributeName="stroke-opacity"
+      dur="1s"
+      values="0.3;1;0.3"
+      keyTimes="0;0.5;1"
+      repeatCount="indefinite"
+    />
+  </circle>
+  <circle cx="12" cy="12" r="10" fill="rgb(137, 137, 253)">
+    <animate
+      attributeName="r"
+      dur="1s"
+      values="10;8;10"
+      keyTimes="0;0.5;1"
+      repeatCount="indefinite"
+    />
+    <animate
+      attributeName="fill-opacity"
+      dur="1s"
+      values="0.3;1;0.3"
+      keyTimes="0;0.5;1"
+      repeatCount="indefinite"
+    />
+  </circle>
+</svg>

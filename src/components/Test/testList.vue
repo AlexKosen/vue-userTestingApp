@@ -1,11 +1,14 @@
 <template>
     <div>
       <h2>Available Tests</h2>
-      <ul>
+      <ul v-if="isTestsAvailable">
         <li v-for="test in availableTests" :key="test.id">
-          {{ test.name }}
-          <button @click="startTest(test.id)" :disabled="isTestCompleted(test.id)">Start Test</button>
+          {{ test.name }} 
+          <button class="btn-test" @click="startTest(test.id)" :disabled="isTestCompleted(test.id)">Start Test</button>
         </li>
+      </ul>
+      <ul v-else>
+        <img src="/public/loading-icon.svg" alt="Loading icon">
       </ul>
   
       <h2>Completed Tests</h2>
@@ -29,7 +32,8 @@
           { id: 4, name: 'Test 4' },
           { id: 5, name: 'Test 5' },
         ],
-        completedTests: []
+        completedTests: [],
+        isTestsAvailable: false
       };
     },
     methods: {
@@ -44,7 +48,7 @@
     },
     async created() {
       this.userId = (await this.$firebaseService.getCurrentUser())?.uid;
-  
+      this.isTestsAvailable = true;
       if (this.userId) {
         const completedTests = await this.$firebaseService.getCompletedTests(this.userId);
         if (completedTests) {
@@ -55,6 +59,22 @@
   };
   </script>
 
-<style>
+<style scoped>
+.btn-test {
+  padding: 5px 10px;
+  background-color: rgb(78, 78, 228);
+  border-radius: 4px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.btn-test:hover {
+  background-color: rgb(137, 137, 253);
+}
+.btn-test:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
 </style>
   
