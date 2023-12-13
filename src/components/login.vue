@@ -7,8 +7,9 @@
   
         <label for="password">Password:</label>
         <input type="password" id="password" v-model="password" required>
+        <p v-if="error" class="error">Email or password is not correct!</p>
         <div class="btn-container">
-        <button type="submit">Login</button>
+        <button class="submit" type="submit">Login</button>
         <button class="btn-registration"><router-link to="/register">Sign up</router-link></button>
       </div>
       </form>
@@ -18,14 +19,14 @@
   </template>
   
   <script>
-  import { ref } from 'vue';
   import { signInWithEmailAndPassword } from 'firebase/auth';
   
   export default {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        error: false,
       };
     },
     methods: {
@@ -35,9 +36,21 @@
           this.$router.push('/home');
         } catch (error) {
           console.error('Login error:', error.message);
-          // Handle login error (show an error message, etc.)
+          this.error = true;
         }
       }
+    },
+    watch: {
+      email(newVal) {
+        if(newVal) {
+          this.error = false;
+        }
+      },
+      password(newVal) {
+        if(newVal) {
+          this.error = false;
+        }
+      },
     }
   };
   </script>
@@ -73,14 +86,17 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+  .error {
+    color: red;
+  }
   .btn-container {
     display: flex;
     justify-content: space-between;
   }
   button {
-    background-color: #3498db;
+    background-color: #3477db;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 40px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -88,10 +104,14 @@
   }
   
   button:hover {
-    background-color: #2980b9;
+    background-color: #54b6fc;
   }
   .btn-registration {
-    background-color: rgb(108, 207, 253);
+    background-color: rgb(92, 202, 253);
+    padding: 10px 15px;
+  }
+  .btn-registration:hover {
+    background-color: rgb(169, 224, 252);
   }
   a {
     color: #fff;

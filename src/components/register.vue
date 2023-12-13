@@ -8,7 +8,9 @@
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="password" required />
 
-      <button type="submit">Sign up</button>
+      <p class="error" v-if="error">{{ error }}</p>
+
+      <button class="submit" type="submit">Sign up</button>
     </form>
   </div>
 </template>
@@ -21,7 +23,8 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: null
     }
   },
   methods: {
@@ -42,10 +45,30 @@ export default {
         this.$router.push('/home')
       } catch (error) {
         console.error('Registration error:', error.message)
-        // Handle registration error (show an error message, etc.)
+        if(error.message === 'Firebase: Error (auth/invalid-email).') {
+          this.error = 'This email is not correct'
+        } else if(error.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
+          this.error = 'Password should be at least 6 characters'
+        } else if(error.message === 'Firebase: Error (auth/email-already-in-use).') {
+          this.error = 'Email already in use'
+        } else {
+          this.error = error.message.split(':')[1]
+        }
       }
     }
-  }
+  },
+  watch: {
+      email(newVal) {
+        if(newVal) {
+          this.error = null;
+        }
+      },
+      password(newVal) {
+        if(newVal) {
+          this.error = null;
+        }
+      },
+    }
 }
 </script>
 
@@ -78,17 +101,23 @@ label {
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+  .error {
+    color: red;
+  }
   .btn-container {
     display: flex;
     justify-content: space-between;
   }
-  button {
-    background-color: rgb(108, 207, 253);
+  .submit {
+    background-color: rgb(159, 86, 255);
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+  }
+  .submit:hover {
+    background-color: rgb(196, 154, 250);
   }
 </style>
